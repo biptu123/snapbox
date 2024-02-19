@@ -6,7 +6,6 @@ const {
 } = require("../controllers/user");
 const router = express.Router();
 
-router.get("/:id", getUserController);
-router.get("/all-users", requireSignIn, isAdmin, getAllUserController);
+router.get("/", requireSignIn, getUserController);
 
 module.exports = router;
