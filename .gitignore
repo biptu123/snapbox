@@ -28,5 +28,5 @@ yarn-error.log*
 yarn.lock
 
 # Frontend code
-/client/*
-!/client/dist/
+# /client/*
+# !/client/dist/
