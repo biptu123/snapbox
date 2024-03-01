@@ -13,6 +13,8 @@ import Dashboard from "./pages/User/Dashboard.jsx";
 import AdminRoutes from "./components/Routes/AdminRoutes.jsx";
 import AdminDashboard from "./pages/Admin/AdminDashboard.jsx";
 import UsersList from "./pages/Admin/UsersList.jsx";
+import Services from "./pages/Services/Services.jsx";
+import About from "./pages/About/About.jsx";
 
 const App = () => {
   return (
@@ -22,6 +24,8 @@ const App = () => {
         <Route path="/" Component={Home} />
         <Route path="/signin" Component={Signin} />
         <Route path="/signup" Component={Signup} />
+        <Route path="/services" Component={Services} />
+        <Route path="/about" Component={About} />
         <Route path="/verify/:token" Component={Verify} />
         <Route path="/" Component={PrivateRoute}>
           <Route path="user" Component={Dashboard} />

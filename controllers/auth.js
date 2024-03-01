@@ -104,9 +104,9 @@ const VerifyController = async (req, res) => {
 };
 
 const LoginController = async (req, res) => {
-  console.log("Here");
   try {
     const { identifier, password } = req.body;
+    console.log(req.body)
 
     if (!identifier || !password) {
       return res.status(400).json({

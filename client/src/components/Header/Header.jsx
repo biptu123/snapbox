@@ -16,8 +16,8 @@ const Header = () => {
               <Link className="active" to="/">
                 Home
               </Link>
-              <a href="About Us">About US</a>
-              <a href="#expand">Services</a>
+              <Link to="/about">About US</Link>
+              <Link to="/services">Services</Link>
               <a href="#project">Project</a>
               <a href="#blog">Blog</a>
               <a href="#contact">Contact Us</a>
