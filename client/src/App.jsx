@@ -13,8 +13,8 @@ import AdminDashboard from "./pages/Admin/AdminDashboard.jsx";
 import UsersList from "./pages/Admin/UsersList.jsx";
 import Services from "./pages/Services/Services.jsx";
 import About from "./pages/About/About.jsx";
-import UserPortfolio from "./UserPortfolio/UserPortfolio.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
+import UserCard from "./UserCard/UserCard.jsx";
 
 const App = () => {
   return (
@@ -28,7 +28,7 @@ const App = () => {
         <Route path="/about" Component={About} />
         <Route path="/contact" Component={Contact} />
         <Route path="/verify/:token" Component={Verify} />
-        <Route path="/user" Component={UserPortfolio} />
+        <Route path="/user" Component={UserCard} />
 
         <Route path="/" Component={PrivateRoute}>
           <Route path="user" Component={Dashboard} />
