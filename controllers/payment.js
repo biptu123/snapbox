@@ -62,11 +62,6 @@ const paidSubscribeController = async (req, res) => {
         message: "Unauthorized Access",
       });
 
-    let card = await CardInfo.findOne({ user: payment.user });
-    if (!card) {
-      days = parseInt(days) + 10;
-    }
-
     const payment = await Payment.create({
       user: req.user._id,
       amount: parseInt(amount),
@@ -80,6 +75,7 @@ const paidSubscribeController = async (req, res) => {
       message: "Payment successfull Wait until we verify the transaction",
     });
   } catch (error) {
+    console.log(error);
     return res.status(401).send({
       success: false,
       message: "Internal Server Error",
@@ -101,9 +97,13 @@ const approvePaymentController = async (req, res) => {
 
     // If card doesn't exist, create a new one
     if (!card) {
+      const currentDate = new Date();
+      const newExpiryDate = new Date(
+        currentDate.getTime() + 10 * 24 * 60 * 60 * 1000
+      );
       card = await CardInfo.create({
-        user: req.user._id,
-        expiry_date: new Date(), // Initialize expiry date to current date
+        user: payment.user,
+        expiry_date: newExpiryDate, // Initialize expiry date to current date
       });
     }
 

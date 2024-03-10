@@ -109,6 +109,7 @@ const getCardInfoController = async (req, res) => {
 const getUnverifiedPaymentsController = async (req, res) => {
   try {
     const payments = await Payment.find({ isVerified: false }).populate("user");
+    console.log(payments);
     if (!payments)
       return res.status(401).send({
         success: false,
