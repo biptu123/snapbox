@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -12,8 +12,9 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  // const [auth, setAuth] = useAuth();
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +41,7 @@ const Signin = () => {
         localStorage.setItem("token", token);
 
         setTimeout(() => {
-          navigate("/user");
+          navigate(location.state || "/");
         }, 200);
       } else {
         toast.error(response.data.message);

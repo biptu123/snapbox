@@ -10,7 +10,6 @@ const url = require("url");
 
 const SignupController = async (req, res) => {
   try {
-    console.log(req.body);
     const { email, username, password } = req.body;
 
     // validation
@@ -64,7 +63,6 @@ const SignupController = async (req, res) => {
       subject: "Email Verification",
       html: `<p>Hello ${username},</p><p>Please click <a href="${verificationURL}">here</a> to verify your email address.</p>`,
     });
-    console.log(emailresponse);
 
     res.status(200).send({
       success: true,
@@ -106,7 +104,6 @@ const VerifyController = async (req, res) => {
 const LoginController = async (req, res) => {
   try {
     const { identifier, password } = req.body;
-    console.log(req.body)
 
     if (!identifier || !password) {
       return res.status(400).json({

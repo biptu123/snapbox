@@ -72,6 +72,12 @@ const Sidebar = (props) => {
                   <p>Users</p>
                 </NavLink>
               </li>
+              <li className="nav-item menu-open">
+                <NavLink to="/admin/payments" className="nav-link">
+                  <i className="nav-icon fa fa-solid fa-users"></i>
+                  <p>Payments</p>
+                </NavLink>
+              </li>
             </ul>
           </nav>
           {/* /.sidebar-menu */}

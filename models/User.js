@@ -7,6 +7,10 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
+    card: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CardInfo",
+    },
     email: {
       type: String,
       unique: true,
@@ -28,6 +32,12 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    appointments: [
+      {
+        date: Date,
+        time: String,
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -52,6 +52,7 @@ const PrivateRoute = () => {
           },
         });
         setIsAuthenticated(response.data.ok);
+        dispatch(setUser(response.data.user));
       } catch (error) {
         console.error("Error checking authentication:", error);
         setIsAuthenticated(false); // Handle error by setting isAuthenticated to false

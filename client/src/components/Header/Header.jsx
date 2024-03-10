@@ -19,6 +19,7 @@ const Header = () => {
               <Link to="/about">About US</Link>
               <Link to="/services">Services</Link>
               <Link to="/contact">Contact Us</Link>
+              <Link to="/user">My Account</Link>
             </div>
             <div className="clear" />
             {/*clear*/}

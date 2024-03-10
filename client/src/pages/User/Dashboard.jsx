@@ -3,9 +3,13 @@ import Layout from "../../components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user);
+  const [cardInfo, setCardInfo] = useState(null);
+  const [payments, setPayments] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -13,12 +17,45 @@ const Dashboard = () => {
     dispatch(clearUser());
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    navigate("/signin");
+    navigate("/");
   };
+
+  useEffect(() => {
+    const getCardInfo = async () => {
+      try {
+        const response = await axios.get(
+          `/api/v1/user/cardinfo/${user.username}`
+        );
+        if (response.data.success) {
+          setCardInfo(response.data.cardInfo);
+        }
+      } catch (error) {
+        setCardInfo(null);
+        toast.error(error?.response?.data?.message);
+      }
+    };
+    const getPayments = async () => {
+      try {
+        const response = await axios.get(`/api/v1/user/payments/${user._id}`);
+        if (response.data.success) {
+          setPayments(response.data.payments);
+        }
+      } catch (error) {
+        setPayments([]);
+        toast.error(error?.response?.data?.message);
+      }
+    };
+    if (user.username) {
+      getCardInfo();
+      getPayments();
+    } else {
+      navigate("/");
+    }
+  }, [user.username]);
 
   return (
     <Layout>
-      <div className="" style={{ minHeight: "1604.44px" }}>
+      <div className="">
         <section className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">
@@ -80,10 +117,18 @@ const Dashboard = () => {
                           )}
                         </a>
                       </li>
-                      <li className="list-group-item">
-                        <b>Plans</b> <a className="float-right">No plans</a>
-                      </li>
                     </ul>
+                    {/* Manage card button */}
+                    {user?.card && (
+                      <a
+                        onClick={() => navigate("/manage-card")}
+                        className="btn btn-secondary btn-block"
+                      >
+                        <b>Manage Card</b>
+                      </a>
+                    )}
+
+                    {/* Logout button */}
                     <a
                       onClick={handleLogout}
                       className="btn btn-primary btn-block"
@@ -134,17 +179,33 @@ const Dashboard = () => {
                             <thead>
                               <tr>
                                 <th>#</th>
-                                <th>Level</th>
-                                <th>Billing</th>
-                                <th>Expiration</th>
+                                <th>Service</th>
+                                <th>Started At</th>
+                                <th>Expires At</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
                                 <td>1.</td>
-                                <td>Free Plan</td>
-                                <td>Free.</td>
-                                <td>March 14, 2024</td>
+                                <td>Smart B Card</td>
+                                <td>
+                                  {new Date(
+                                    cardInfo?.createdAt
+                                  ).toLocaleDateString(undefined, {
+                                    year: "2-digit",
+                                    month: "short",
+                                    day: "numeric",
+                                  })}
+                                </td>
+                                <td>
+                                  {new Date(
+                                    cardInfo?.expiry_date
+                                  ).toLocaleDateString(undefined, {
+                                    year: "2-digit",
+                                    month: "short",
+                                    day: "numeric",
+                                  })}
+                                </td>
                               </tr>
                             </tbody>
                           </table>
@@ -156,20 +217,38 @@ const Dashboard = () => {
                             <thead>
                               <tr>
                                 <th>Date</th>
-                                <th>Level</th>
+                                <th>Duration</th>
                                 <th>Amount</th>
                                 <th>Status</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>February 13, 2024</td>
-                                <td>Free Plan</td>
-                                <td> INR 0.00</td>
-                                <td>
-                                  <span className="badge bg-success">Paid</span>
-                                </td>
-                              </tr>
+                              {payments?.map((payment) => (
+                                <tr>
+                                  <td>
+                                    {new Date(
+                                      payment?.updatedAt
+                                    ).toLocaleDateString(undefined, {
+                                      year: "2-digit",
+                                      month: "short",
+                                      day: "numeric",
+                                    })}
+                                  </td>
+                                  <td>{payment.days} days</td>
+                                  <td> INR {payment.amount}</td>
+                                  <td>
+                                    {payment?.isVerified ? (
+                                      <span className="badge bg-success">
+                                        verified
+                                      </span>
+                                    ) : (
+                                      <span className="badge bg-danger">
+                                        pending
+                                      </span>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
                             </tbody>
                           </table>
                         </div>

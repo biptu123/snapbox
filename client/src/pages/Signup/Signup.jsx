@@ -31,7 +31,6 @@ const Signup = () => {
       });
       setLoading(false);
 
-      console.log(response.data);
       toast.success(response.data.message);
       if (response.data.success) {
         setTimeout(() => {

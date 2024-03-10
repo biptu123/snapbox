@@ -3,10 +3,17 @@ const { requireSignIn, isAdmin } = require("../middlewares/auth");
 const {
   getSingleUserController,
   getAllUserController,
+  getUnverifiedPaymentsController,
 } = require("../controllers/user");
 const router = express.Router();
 
 router.get("/all-users", requireSignIn, isAdmin, getAllUserController);
-router.get("/single-user/:id", getSingleUserController);
+router.get(
+  "/unverified-payments",
+  requireSignIn,
+  isAdmin,
+  getUnverifiedPaymentsController
+);
+router.get("/single-user/:id", getUnverifiedPaymentsController);
 
 module.exports = router;
