@@ -15,14 +15,6 @@ const Hero = () => {
           data-type='[ "for Business", "to sell online", "for your ideas","GST Registration"]'
         />
         <p> BUISNESS CONSULTANCY SERVICES &amp; SOLOUTION</p>
-
-        <button
-          className="common-btn"
-          type="button"
-          onClick={() => navigate("/signin")}
-        >
-          Get Started
-        </button>
       </div>
       <div className="header-col2"></div>
       <div className="clear" />

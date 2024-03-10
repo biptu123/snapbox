@@ -67,22 +67,29 @@ const updateBasicController = async (req, res) => {
       facebook,
       phone,
       location,
+      instagram,
+      twitter,
+      linkedin,
+      website,
+      whatsapp,
+      sms,
+      email,
     } = req.body;
-    if (
-      !title ||
-      !subtitle ||
-      !name ||
-      !description ||
-      !youtube ||
-      !facebook ||
-      !phone ||
-      !location
-    ) {
-      return res.status(400).send({
-        success: false,
-        message: "All fields are required",
-      });
-    }
+    // if (
+    //   !title ||
+    //   !subtitle ||
+    //   !name ||
+    //   !description ||
+    //   !youtube ||
+    //   !facebook ||
+    //   !phone ||
+    //   !location
+    // ) {
+    //   return res.status(400).send({
+    //     success: false,
+    //     message: "All fields are required",
+    //   });
+    // }
     const user = await User.findById(req.user._id);
     const cardInfo = await CardInfo.findOne({ user: user._id });
     if (!user)
@@ -99,6 +106,13 @@ const updateBasicController = async (req, res) => {
     cardInfo.facebook = facebook;
     cardInfo.phone = phone;
     cardInfo.location = location;
+    cardInfo.instagram = instagram;
+    cardInfo.twitter = twitter;
+    cardInfo.linkedin = linkedin;
+    cardInfo.website = website;
+    cardInfo.whatsapp = whatsapp;
+    cardInfo.email = email;
+    cardInfo.sms = sms;
 
     await cardInfo.save();
     return res.status(200).send({

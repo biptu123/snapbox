@@ -18,6 +18,7 @@ import UserCard from "./UserCard/UserCard.jsx";
 import BCardService from "./pages/BCardService/BCardService.jsx";
 import ManageCard from "./pages/ManageCard/ManageCard.jsx";
 import PaymentList from "./pages/Admin/PaymentList.jsx";
+import TeamMembers from "./pages/Team/Team.jsx";
 
 const App = () => {
   return (
@@ -30,6 +31,8 @@ const App = () => {
         <Route path="/services" Component={Services} />
         <Route path="/about" Component={About} />
         <Route path="/contact" Component={Contact} />
+        <Route path="/team" Component={TeamMembers} />
+
         <Route path="/verify/:token" Component={Verify} />
         <Route path="/:username" Component={UserCard} />
 

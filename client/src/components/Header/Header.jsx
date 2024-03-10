@@ -1,41 +1,133 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { FaBarsStaggered } from "react-icons/fa6";
+import { MdCancel } from "react-icons/md";
+
+const Menu = styled.div`
+  display: none;
+  @media (min-width: 1090px) {
+    display: block;
+  }
+`;
+
+const StartButton = styled.div`
+  display: none;
+  @media (min-width: 1090px) {
+    display: block;
+  }
+`;
+const Hamburger = styled.div`
+  position: fixed;
+  right: 10px;
+  z-index: 1000;
+  top: 10px;
+  display: none;
+  @media (max-width: 1090px) {
+    display: block;
+  }
+`;
+
+const MobileMenu = styled.div`
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #4e4848;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MobileMenuItem = styled(NavLink)`
+  color: white;
+  font-size: 24px;
+  margin: 10px 0;
+  text-decoration: none;
+`;
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
+  const navigate = useNavigate();
+
+  const handleMenuItemClick = () => {
+    setIsOpen(false); // Close the menu after clicking a menu item
+  };
+
   return (
-    <header id="home" className="fixed">
-      <div className="container">
-        <div className="top-bar">
-          <div className="nav-col">
-            <div className="logo">
-              <img src={logo} className="img-responsive" alt="logo" />
+    <div style={{ position: "relative" }}>
+      <header id="home" className="fixed-header">
+        <div className="container">
+          <div className="top-bar d-flex justify-content-between align-items-center">
+            <div className="nav-col">
+              <div className="logo">
+                <img src={logo} className="img-responsive" alt="logo" />
+              </div>
+
+              <Menu className="menu">
+                <NavLink to="/">Home</NavLink>
+                <NavLink to="/about">About US</NavLink>
+                <NavLink to="/services">Services</NavLink>
+                <NavLink to="/contact">Contact Us</NavLink>
+                <NavLink to="/user">My Account</NavLink>
+              </Menu>
             </div>
-            {/*logo*/}
-            <div className="menu">
-              <Link className="active" to="/">
-                Home
-              </Link>
-              <Link to="/about">About US</Link>
-              <Link to="/services">Services</Link>
-              <Link to="/contact">Contact Us</Link>
-              <Link to="/user">My Account</Link>
-            </div>
-            <div className="clear" />
-            {/*clear*/}
+            <StartButton className="">
+              <button
+                className="btn btn-outline-dark"
+                type="button"
+                onClick={() => navigate("/signin")}
+              >
+                Get Started
+              </button>
+            </StartButton>
           </div>
-          {/*nav-col*/}
-          <div className="cnt-info-col">
-            <a href="tel:+91 02269620313">
-              <span>Call US:</span>+91 02269620313
-            </a>
-          </div>
-          <div className="clear" />
-          {/*clear*/}
         </div>
-        {/*top-bar*/}
-      </div>
-    </header>
+      </header>
+      <Hamburger>
+        <button
+          className="btn btn-outline-secondary"
+          type="button"
+          onClick={toggle}
+        >
+          {!isOpen ? (
+            <FaBarsStaggered size={40} color="black" />
+          ) : (
+            <MdCancel size={40} color="black" />
+          )}
+        </button>
+      </Hamburger>
+      {isOpen && (
+        <MobileMenu>
+          <MobileMenuItem to="/" onClick={handleMenuItemClick}>
+            Home
+          </MobileMenuItem>
+          <MobileMenuItem to="/about" onClick={handleMenuItemClick}>
+            About Us
+          </MobileMenuItem>
+          <MobileMenuItem to="/services" onClick={handleMenuItemClick}>
+            Services
+          </MobileMenuItem>
+          <MobileMenuItem to="/contact" onClick={handleMenuItemClick}>
+            Contact Us
+          </MobileMenuItem>
+          <MobileMenuItem to="/user" onClick={handleMenuItemClick}>
+            My Account
+          </MobileMenuItem>
+          <MobileMenuItem to="/signin" onClick={handleMenuItemClick}>
+            Get Started
+          </MobileMenuItem>
+        </MobileMenu>
+      )}
+    </div>
   );
 };
 

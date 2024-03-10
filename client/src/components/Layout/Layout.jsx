@@ -1,12 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import { IoLogoWhatsapp } from "react-icons/io";
+import styled, { keyframes } from "styled-components";
+
+const slideInBottom = keyframes`
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+const WhatsappButton = styled.a`
+  all: unset;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  transition: all 0.5s ease-in-out;
+  animation: ${slideInBottom} 0.5s ease-in-out;
+  cursor: pointer;
+`;
 
 const Layout = (props) => {
+  const phoneNumber = "6000167276";
+  const message = "Hello";
   return (
     <>
       <Header />
-      {props.children}
+      <div style={{ marginTop: "100px" }}>{props.children}</div>
+      <WhatsappButton
+        href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+          message
+        )}`}
+      >
+        <IoLogoWhatsapp size={70} color="green" />
+      </WhatsappButton>
+
       <Footer />
     </>
   );

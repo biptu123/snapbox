@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import homeImg from "../../assets/images/expand-home-img.png";
 import homeFaqImg from "../../assets/images/home-faq.png";
 import serviceImg1 from "../../assets/images/home-faeture-img/service_img1.png";
@@ -9,6 +9,36 @@ import Hero from "./Hero";
 import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
 
+const AnimatedNumber = ({ value }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const animationDuration = 2000; // Duration in milliseconds
+    const animationSteps = 100; // Number of steps
+    const stepSize = Math.ceil(value / animationSteps);
+    let currentStep = 0;
+
+    const interval = setInterval(() => {
+      setCount((prevCount) => {
+        const nextCount = prevCount + stepSize;
+        if (nextCount >= value) {
+          clearInterval(interval);
+          return value;
+        }
+        return nextCount;
+      });
+      currentStep++;
+      if (currentStep >= animationSteps) {
+        clearInterval(interval);
+        setCount(value);
+      }
+    }, animationDuration / animationSteps);
+
+    return () => clearInterval(interval);
+  }, [value]);
+
+  return <span>{count}</span>;
+};
 const Home = () => {
   return (
     <Layout>
@@ -17,7 +47,7 @@ const Home = () => {
           <i className="fa fa-arrow-up" aria-hidden="true" />
         </div>
         <Hero />
-        <section id="feature-sec">
+        <section id="feature-sec" className="">
           <div className="text-center">
             <h5 className="common-h5">CARE FEATURES</h5>
             <h2 className="common-h2">
@@ -27,7 +57,7 @@ const Home = () => {
           {/*text-center*/}
           <section className="faeture-col-par">
             <div className="container">
-              <div className="feature-col">
+              <div className="feature-col fade-in">
                 <h3>Discover, Digital merketing</h3>
                 <img
                   src={serviceImg1}
@@ -38,7 +68,7 @@ const Home = () => {
                 {/*                </div>feature-col*/}
               </div>
               {/*feature-col*/}
-              <div className="feature-col">
+              <div className="feature-col fade-in">
                 <h3>Discover, Data Entry Work</h3>
                 <img
                   src={serviceImg2}
@@ -49,7 +79,7 @@ const Home = () => {
                 {/*                </div>feature-col*/}
               </div>
               {/*feature-col*/}
-              <div className="feature-col">
+              <div className="feature-col fade-in">
                 <h3>Discover, Free Consulting Services</h3>
                 <img
                   src={serviceImg3}
@@ -60,7 +90,7 @@ const Home = () => {
                 {/*                </div>feature-col*/}
               </div>
               {/*feature-col*/}
-              <div className="feature-col">
+              <div className="feature-col fade-in">
                 <h3>Discover, SEO</h3>
                 <img
                   src={serviceImg4}
@@ -95,7 +125,9 @@ const Home = () => {
                 <div className="stat">
                   <div className="count-sub-col">
                     <div className="milestone-counter">
-                      <span className="stat-count highlight">2000</span>
+                      <span className="stat-count highlight">
+                        <AnimatedNumber value={2000} />
+                      </span>
                       <div className="milestone-details">Happy Customers</div>
                     </div>
                     {/*milestone-counter*/}
@@ -103,7 +135,10 @@ const Home = () => {
                   {/*count-sub-col*/}
                   <div className="count-sub-col">
                     <div className="milestone-counter">
-                      <span className="stat-count highlight ">100,</span>
+                      <span className="stat-count highlight ">
+                        {" "}
+                        <AnimatedNumber value={100} />%
+                      </span>
                       <div className="milestone-details">Orders Completed</div>
                     </div>
                     {/*milestone-counter*/}
@@ -111,7 +146,10 @@ const Home = () => {
                   {/*count-sub-col*/}
                   <div className="count-sub-col">
                     <div className="milestone-counter">
-                      <span className="stat-count highlight">90</span>
+                      <span className="stat-count highlight">
+                        {" "}
+                        <AnimatedNumber value={90} />
+                      </span>
                       <div className="milestone-details">Awards Win</div>
                     </div>
                     {/*milestone-counter*/}
@@ -307,86 +345,7 @@ const Home = () => {
             </div>
             {/*container*/}
           </section>
-          <section id="project">
-            <div className="text-center">
-              <h5 className="common-h5">FEATURED PROJECTS</h5>
-              <h2 className="common-h2">Our Case Studies</h2>
-            </div>
-            <div className="owl-carousel owl-theme">
-              <div className="item">
-                <div className="owl-img-par">
-                  <img
-                    src="images/portfolio/portfolio-one.jpg"
-                    className="img-responsive"
-                  />
-                  <div className="owl-img-info">
-                    <h3>SEO</h3>
-                    <p>Marketing</p>
-                  </div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="owl-img-par">
-                  <img
-                    src="images/portfolio/portfolio-two.jpg"
-                    className="img-responsive"
-                  />
-                  <div className="owl-img-info">
-                    <h3>SEO</h3>
-                    <p>Marketing</p>
-                  </div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="owl-img-par">
-                  <img
-                    src="images/portfolio/portfolio-three.jpg"
-                    className="img-responsive"
-                  />
-                  <div className="owl-img-info">
-                    <h3>SEO</h3>
-                    <p>Marketing</p>
-                  </div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="owl-img-par">
-                  <img
-                    src="images/portfolio/portfolio-four.jpg"
-                    className="img-responsive"
-                  />
-                  <div className="owl-img-info">
-                    <h3>SEO</h3>
-                    <p>Marketing</p>
-                  </div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="owl-img-par">
-                  <img
-                    src="images/portfolio/portfolio-one.jpg"
-                    className="img-responsive"
-                  />
-                  <div className="owl-img-info">
-                    <h3>SEO</h3>
-                    <p>Marketing</p>
-                  </div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="owl-img-par">
-                  <img
-                    src="images/portfolio/portfolio-two.jpg"
-                    className="img-responsive"
-                  />
-                  <div className="owl-img-info">
-                    <h3>SEO</h3>
-                    <p>Marketing</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+
           <section id="price-table">
             <div className="text-center">
               <h5 className="common-h5">PRICING PLAN</h5>

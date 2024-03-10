@@ -62,7 +62,8 @@ const paidSubscribeController = async (req, res) => {
         message: "Unauthorized Access",
       });
 
-    if (!user.card) {
+    let card = await CardInfo.findOne({ user: payment.user });
+    if (!card) {
       days = parseInt(days) + 10;
     }
 

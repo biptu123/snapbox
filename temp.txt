@@ -1,0 +1,28 @@
+<header id="home" className="fixed">
+        <div className="container">
+          <div className="top-bar">
+            <div className="nav-col">
+              <div className="logo">
+                <img src={logo} className="img-responsive" alt="logo" />
+              </div>
+              {/*logo*/}
+              <div className="menu">
+                <NavLink to="/">Home</NavLink>
+                <NavLink to="/about">About US</NavLink>
+                <NavLink to="/services">Services</NavLink>
+                <NavLink to="/contact">Contact Us</NavLink>
+                <NavLink to="/user">My Account</NavLink>
+              </div>
+            </div>
+            <div className="">
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={() => navigate("/signin")}
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>

@@ -28,6 +28,7 @@ const CardInfoSchema = new mongoose.Schema(
     subtitle: String,
     description: String,
     name: String,
+
     youtube: String,
     facebook: String,
     instagram: String,
@@ -36,6 +37,9 @@ const CardInfoSchema = new mongoose.Schema(
     website: String,
     phone: String,
     location: String,
+    whatsapp: String,
+    email: String,
+    sms: String,
 
     services: [
       {

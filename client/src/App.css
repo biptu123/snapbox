@@ -70,6 +70,7 @@ p {
 }
 
 #arrow i {
+  display: none;
   position: fixed;
   bottom: 20px;
   right: 25px;
@@ -92,7 +93,6 @@ p {
   left: 0;
   top: 0;
   background-color: #fff;
-  box-shadow: 10px 10px 20px #fff;
 }
 
 header {
@@ -1330,4 +1330,34 @@ hr.footer-hr {
   flex: 1;
   height: 1px;
   background: #eee;
+}
+.fade-in {
+  opacity: 0;
+  animation: fadeInAnimation 0.5s ease-in forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    transform: translateY(500px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes countUpAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stat-count {
+  animation: countUpAnimation 1s ease forwards;
 }

@@ -185,28 +185,30 @@ const Dashboard = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>1.</td>
-                                <td>Smart B Card</td>
-                                <td>
-                                  {new Date(
-                                    cardInfo?.createdAt
-                                  ).toLocaleDateString(undefined, {
-                                    year: "2-digit",
-                                    month: "short",
-                                    day: "numeric",
-                                  })}
-                                </td>
-                                <td>
-                                  {new Date(
-                                    cardInfo?.expiry_date
-                                  ).toLocaleDateString(undefined, {
-                                    year: "2-digit",
-                                    month: "short",
-                                    day: "numeric",
-                                  })}
-                                </td>
-                              </tr>
+                              {cardInfo && (
+                                <tr>
+                                  <td>1.</td>
+                                  <td>Smart B Card</td>
+                                  <td>
+                                    {new Date(
+                                      cardInfo?.createdAt
+                                    ).toLocaleDateString(undefined, {
+                                      year: "2-digit",
+                                      month: "short",
+                                      day: "numeric",
+                                    })}
+                                  </td>
+                                  <td>
+                                    {new Date(
+                                      cardInfo?.expiry_date
+                                    ).toLocaleDateString(undefined, {
+                                      year: "2-digit",
+                                      month: "short",
+                                      day: "numeric",
+                                    })}
+                                  </td>
+                                </tr>
+                              )}
                             </tbody>
                           </table>
                         </div>
