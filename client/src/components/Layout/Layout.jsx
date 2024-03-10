@@ -26,7 +26,7 @@ const WhatsappButton = styled.a`
 `;
 
 const Layout = (props) => {
-  const phoneNumber = "6000167276";
+  const phoneNumber = "+916000167276";
   const message = "Hello";
   return (
     <>
