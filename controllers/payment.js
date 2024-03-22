@@ -24,11 +24,12 @@ const freeSubscribeController = async (req, res) => {
       amount: 0,
       transaction_id: "N/A",
       isVerified: true,
+      type: "Free Plan",
     });
 
-    // Calculate the expiry date 10 days from now
+    // Calculate the expiry date 15 days from now
     const tenDaysLater = new Date();
-    tenDaysLater.setDate(tenDaysLater.getDate() + 10);
+    tenDaysLater.setDate(tenDaysLater.getDate() + 15);
 
     // Create a new CardInfo document with the calculated expiry date
     const card = await CardInfo.create({
@@ -67,6 +68,7 @@ const paidSubscribeController = async (req, res) => {
       amount: parseInt(amount),
       transaction_id: transactionId,
       days: days,
+      type: amount === 599 ? "Basic Plan" : "Premium Plan",
     });
 
     return res.status(200).send({
@@ -99,7 +101,7 @@ const approvePaymentController = async (req, res) => {
     if (!card) {
       const currentDate = new Date();
       const newExpiryDate = new Date(
-        currentDate.getTime() + 10 * 24 * 60 * 60 * 1000
+        currentDate.getTime() + 15 * 24 * 60 * 60 * 1000
       );
       card = await CardInfo.create({
         user: payment.user,

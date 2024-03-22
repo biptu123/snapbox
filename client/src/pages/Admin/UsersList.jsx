@@ -3,6 +3,7 @@ import AdminLayout from "../../components/AdminLayout/AdminLayout";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../slices/userSlice";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const UsersList = () => {
@@ -30,6 +31,22 @@ const UsersList = () => {
     fetchUsers();
   }, []);
 
+  const makeAdmin = async (_id) => {
+    try {
+      const response = await axios.get(`/api/v1/admin/make-admin/${_id}`, {
+        headers: {
+          Authorization: `${user?.token}`,
+        },
+      });
+      if (response?.data?.success) {
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error making admin:", error);
+      toast.error(error?.response?.data?.message);
+    }
+  };
+
   return (
     <AdminLayout title="All Users">
       <div className="card">
@@ -51,12 +68,21 @@ const UsersList = () => {
             </thead>
             <tbody>
               {users.map((user, index) => (
-                <tr key={index}>
+                <tr key={user._id}>
                   <td>{index + 1}</td>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                   <td>
-                    <button className="btn btn-primary ">view</button>
+                    {user.role == 0 ? (
+                      <button
+                        className="btn btn-primary "
+                        onClick={() => makeAdmin(user._id)}
+                      >
+                        Make Admin
+                      </button>
+                    ) : (
+                      "Already an Admin"
+                    )}
                   </td>
                   <td>
                     {user.isVerified ? (

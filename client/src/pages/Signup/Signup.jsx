@@ -67,7 +67,7 @@ const Signup = () => {
                     type="text"
                     id="username"
                     className="form-control form-control "
-                    placeholder="Enter a valid phone number"
+                    placeholder="Enter a valid user name"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />

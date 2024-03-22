@@ -8,6 +8,7 @@ import serviceImg4 from "../../assets/images/home-faeture-img/service_img4.png";
 import Hero from "./Hero";
 import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
+import AboutSnapbox from "./AboutSnapbox";
 
 const AnimatedNumber = ({ value }) => {
   const [count, setCount] = useState(0);
@@ -55,6 +56,7 @@ const Home = () => {
             </h2>
           </div>
           {/*text-center*/}
+
           <section className="faeture-col-par">
             <div className="container">
               <div className="feature-col fade-in">
@@ -104,6 +106,8 @@ const Home = () => {
               <div className="clear" />
             </div>
           </section>
+          <AboutSnapbox />
+
           <section id="why-choose-us">
             <div className="container">
               <div className="why-choose-col">
@@ -272,6 +276,7 @@ const Home = () => {
             <div className="clear" />
             {/*clear*/}
           </section>
+
           <section id="faq-par">
             <div className="container">
               <div className="faq-que-col">
@@ -345,7 +350,6 @@ const Home = () => {
             </div>
             {/*container*/}
           </section>
-
           <section id="price-table">
             <div className="text-center">
               <h5 className="common-h5">PRICING PLAN</h5>
@@ -355,46 +359,49 @@ const Home = () => {
               <div className="basic-price-info">
                 <h4>Free Plan</h4>
                 <div className="price">
-                  <p>₹2450</p>
+                  <p>₹0</p>
                 </div>
                 {/*price*/}
                 <div className="price-list">
                   <ul>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
+                    <li>Free registration</li>
+                    <li>
+                      <strike>USB card</strike>
+                    </li>
+                    <li>Free user pannel</li>
+                    <li>
+                      <strike>Customer service</strike>
+                    </li>
+                    <li>
+                      <strike>Referral bonus</strike> (Suitable price)
+                    </li>
+                    <li>Validity upto 15 days</li>
                   </ul>
                 </div>
                 {/*price-list*/}
-                <button type="button" className="price-btn">
-                  Get Started
-                </button>
               </div>
               {/*basic-price-info*/}
             </div>
             {/*basic-price-col*/}
             <div className="basic-price-col rec-price">
               <div className="basic-price-info">
-                <h4>Standart Plan</h4>
+                <h4>Standard Plan</h4>
                 <div className="price">
-                  <p>₹2450</p>
+                  <p>₹599</p>
                 </div>
                 {/*price*/}
                 <div className="price-list">
                   <ul>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
+                    <li>Professional business dashboard</li>
+                    <li>One year free online portal</li>
+                    <li>Smart USB card</li>
+                    <li>One year warrenty</li>
+                    <li>Free One year business consulting service (6 calls)</li>
+                    <li>Upto INR 100 referal bonus</li>
+                    <li>12 months validity</li>
                   </ul>
                 </div>
                 {/*price-list*/}
-                <button type="button" className="price-btn">
-                  Get Started
-                </button>
               </div>
               {/*basic-price-info*/}
             </div>
@@ -403,22 +410,22 @@ const Home = () => {
               <div className="basic-price-info">
                 <h4>Premium Plan</h4>
                 <div className="price">
-                  <p>₹2450</p>
+                  <p>₹899</p>
                 </div>
                 {/*price*/}
                 <div className="price-list">
                   <ul>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
-                    <li>SEO Audits</li>
+                    <li>Professional business dashboard</li>
+                    <li>Upto INR 200 referal bonus</li>
+                    <li>Free user panel</li>
+                    <li>Mat - finish card with 18 months of validity</li>
+                    <li>Premium customer service support</li>
+                    <li>
+                      Free one year business consulting service (10 calls)
+                    </li>
                   </ul>
                 </div>
                 {/*price-list*/}
-                <button type="button" className="price-btn">
-                  Get Started
-                </button>
               </div>
               {/*basic-price-info*/}
             </div>

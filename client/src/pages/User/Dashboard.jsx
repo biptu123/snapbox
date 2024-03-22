@@ -5,6 +5,8 @@ import { clearUser } from "../../slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Settings from "./Settings";
+import PastInvoices from "./PastInvoices";
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user);
@@ -31,7 +33,6 @@ const Dashboard = () => {
         }
       } catch (error) {
         setCardInfo(null);
-        toast.error(error?.response?.data?.message);
       }
     };
     const getPayments = async () => {
@@ -42,7 +43,6 @@ const Dashboard = () => {
         }
       } catch (error) {
         setPayments([]);
-        toast.error(error?.response?.data?.message);
       }
     };
     if (user.username) {
@@ -82,7 +82,7 @@ const Dashboard = () => {
                     <div className="text-center">
                       <img
                         className="profile-user-img img-fluid img-circle"
-                        src="../../dist/img/avatar5.png"
+                        src={user?.image?.url || "../../dist/img/avatar5.png"}
                         alt="User profile picture"
                       />
                     </div>
@@ -120,12 +120,20 @@ const Dashboard = () => {
                     </ul>
                     {/* Manage card button */}
                     {user?.card && (
-                      <a
-                        onClick={() => navigate("/manage-card")}
-                        className="btn btn-secondary btn-block"
-                      >
-                        <b>Manage Card</b>
-                      </a>
+                      <>
+                        <a
+                          onClick={() => navigate(`/${user?.username}`)}
+                          className="btn btn-outline-secondary btn-block"
+                        >
+                          <b>Your Card</b>
+                        </a>
+                        <a
+                          onClick={() => navigate("/manage-card")}
+                          className="btn btn-outline-success btn-block"
+                        >
+                          <b>Manage Card</b>
+                        </a>
+                      </>
                     )}
 
                     {/* Logout button */}
@@ -213,107 +221,8 @@ const Dashboard = () => {
                           </table>
                         </div>
                       </div>
-                      <div className="tab-pane" id="timeline">
-                        <div className="card-body p-0">
-                          <table className="table table-sm">
-                            <thead>
-                              <tr>
-                                <th>Date</th>
-                                <th>Duration</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {payments?.map((payment) => (
-                                <tr>
-                                  <td>
-                                    {new Date(
-                                      payment?.updatedAt
-                                    ).toLocaleDateString(undefined, {
-                                      year: "2-digit",
-                                      month: "short",
-                                      day: "numeric",
-                                    })}
-                                  </td>
-                                  <td>{payment.days} days</td>
-                                  <td> INR {payment.amount}</td>
-                                  <td>
-                                    {payment?.isVerified ? (
-                                      <span className="badge bg-success">
-                                        verified
-                                      </span>
-                                    ) : (
-                                      <span className="badge bg-danger">
-                                        pending
-                                      </span>
-                                    )}
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                      <div className="tab-pane" id="settings">
-                        <form className="form-horizontal">
-                          <div className="form-group row">
-                            <label
-                              htmlFor="inputName"
-                              className="col-sm-2 col-form-label"
-                            >
-                              Name
-                            </label>
-                            <div className="col-sm-10">
-                              <input
-                                type="email"
-                                className="form-control"
-                                id="inputName"
-                                placeholder="Name"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group row">
-                            <label
-                              htmlFor="inputName2"
-                              className="col-sm-2 col-form-label"
-                            >
-                              Usename
-                            </label>
-                            <div className="col-sm-10">
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="inputName2"
-                                placeholder="Name"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group row">
-                            <label
-                              htmlFor="inputExperience"
-                              className="col-sm-2 col-form-label"
-                            >
-                              Profile photo
-                            </label>
-                            <div className="col-sm-10">
-                              <input
-                                type="file"
-                                className="form-control"
-                                id="inputExperience"
-                                placeholder="profile_photo"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group row">
-                            <div className="offset-sm-2 col-sm-10">
-                              <button type="submit" className="btn btn-danger">
-                                Edit profile
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
+                      {payments && <PastInvoices payments={payments} />}
+                      <Settings />
                     </div>
                   </div>
                 </div>

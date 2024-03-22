@@ -2,6 +2,7 @@ const User = require("../models/User");
 const CardInfo = require("../models/CardInfo");
 const Payment = require("../models/Payment");
 const slugify = require("slugify");
+const cloudinary = require("../utils/cloudinary");
 
 const getUserController = async (req, res) => {
   try {
@@ -127,6 +128,27 @@ const getUnverifiedPaymentsController = async (req, res) => {
   }
 };
 
+const getVerifiedPaymentsController = async (req, res) => {
+  try {
+    const payments = await Payment.find({ isVerified: true }).populate("user");
+    console.log(payments);
+    if (!payments)
+      return res.status(401).send({
+        success: false,
+        message: "Something went wrong",
+      });
+    return res.status(200).send({
+      success: true,
+      payments,
+    });
+  } catch (error) {
+    return res.status(401).send({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
 const getPaymentsController = async (req, res) => {
   try {
     const payments = await Payment.find({ user: req.params.id });
@@ -147,6 +169,91 @@ const getPaymentsController = async (req, res) => {
   }
 };
 
+const updateUserController = async (req, res) => {
+  try {
+    const { name, image } = req.body;
+    const user = await User.findByIdAndUpdate(req.user._id, { name });
+
+    if (image) {
+      const imageResult = await cloudinary.uploader.upload(image, {
+        folder: "snapbox",
+        quality: 60,
+        width: 500,
+        height: 500,
+      });
+      user.image = {
+        public_id: imageResult.public_id,
+        url: imageResult.secure_url,
+      };
+    }
+    await user.save();
+    if (!user)
+      return res.status(401).send({
+        success: false,
+        message: "Something went wrong",
+      });
+    return res.status(200).send({
+      success: true,
+      user,
+      message: "Updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).send({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+const makeAdminController = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params._id, { role: 1 });
+
+    if (!user)
+      return res.status(401).send({
+        success: false,
+        message: "Something went wrong",
+      });
+    return res.status(200).send({
+      success: true,
+      user,
+      message: "Updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).send({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+const getDetailsController = async (req, res) => {
+  try {
+    const users = await User.find({});
+    const activeUser = await User.find({ isVerified: true });
+    const payments = await Payment.find({});
+    const unverified = await Payment.find({ isVerified: false });
+
+    return res.status(200).send({
+      success: true,
+      details: {
+        unverified_payments: unverified.length,
+        total_payments: payments.length,
+        users: users.length,
+        active_users: activeUser.length,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).send({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   getUserController,
   getAllUserController,
@@ -154,4 +261,8 @@ module.exports = {
   getCardInfoController,
   getUnverifiedPaymentsController,
   getPaymentsController,
+  updateUserController,
+  getVerifiedPaymentsController,
+  makeAdminController,
+  getDetailsController,
 };

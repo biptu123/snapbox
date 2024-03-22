@@ -32,6 +32,13 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    image: {
+      public_id: String,
+      url: String,
+    },
+    name: {
+      type: String,
+    },
     appointments: [
       {
         date: Date,

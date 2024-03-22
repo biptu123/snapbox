@@ -5,6 +5,8 @@ const initialState = {
   _id: "",
   username: "",
   email: "",
+  image: null,
+  name: null,
 };
 
 export const userSlice = createSlice({
@@ -12,6 +14,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
+      console.log(action);
       Object.keys(action.payload).forEach((key) => {
         state[key] = action.payload[key];
       });
