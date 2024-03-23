@@ -39,6 +39,9 @@ const UserSchema = new mongoose.Schema(
     name: {
       type: String,
     },
+    otp: {
+      type: Number,
+    },
     appointments: [
       {
         date: Date,

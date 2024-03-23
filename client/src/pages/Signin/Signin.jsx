@@ -67,41 +67,45 @@ const Signin = () => {
             </div>
             <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 p-5 bg-secondary rounded">
               <form onSubmit={handleSubmit}>
-                <div className="form-outline mb-4  form-floating">
+                <div className="form-group mb-4">
+                  <label htmlFor="email" className="form-label">
+                    Username or Email address
+                  </label>
                   <input
                     type="text"
                     id="email"
-                    className="form-control form-control"
+                    className="form-control"
                     placeholder="Enter a valid username or email"
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
                   />
-                  <label className="form-label" htmlFor="email">
-                    Username or Email address
-                  </label>
                 </div>
-                <div className="form-outline mb-4  form-floating">
+                <div className="form-group mb-4">
+                  <label htmlFor="password" className="form-label">
+                    Password
+                  </label>
                   <input
                     type="password"
                     id="password"
                     placeholder="Enter password"
-                    className="form-control form-control"
+                    className="form-control"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <label className="form-label" htmlFor="password">
-                    Password
-                  </label>
                 </div>
-                <div className="d-flex justify-content-around align-items-center mb-4">
-                  Don't have an account <Link to="/signup">Register now</Link>
+                <div className="mb-4">
+                  Don't have an account?{" "}
+                  <Link to="/signup" className="text-dark">
+                    Register now
+                  </Link>
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg btn-block"
-                >
+
+                <button type="submit" className="btn btn-dark btn-lg mr-3">
                   Sign in
                 </button>
+                <Link to="/reset" className="btn btn-outline-dark btn-lg ml-3">
+                  Reset Password
+                </Link>
               </form>
             </div>
           </div>

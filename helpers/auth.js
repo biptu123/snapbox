@@ -5,7 +5,11 @@ function generateVerificationToken() {
   return crypto.randomBytes(32).toString("hex");
 }
 
-module.exports = generateVerificationToken;
+function generateOTP() {
+  // Generate a random 6-digit number
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  return otp.toString(); // Convert the number to string
+}
 
 const hashPassword = async (password) => {
   try {
@@ -23,4 +27,5 @@ module.exports = {
   hashPassword,
   comparePassword,
   generateVerificationToken,
+  generateOTP,
 };

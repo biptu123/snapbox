@@ -5,6 +5,7 @@ import { clearUser } from "../../slices/userSlice";
 
 const Sidebar = (props) => {
   const user = useSelector((state) => state.user);
+  console.log(user);
   const dispatch = useDispatch();
   return (
     <div>
@@ -25,7 +26,7 @@ const Sidebar = (props) => {
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
               <img
-                src="/dist/img/user2-160x160.jpg"
+                src={user?.image?.url || "/dist/img/user2-160x160.jpg"}
                 className="img-circle elevation-2"
                 alt="User Image"
               />

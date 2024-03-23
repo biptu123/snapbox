@@ -3,6 +3,9 @@ const {
   LoginController,
   SignupController,
   VerifyController,
+  SendOtpController,
+  ResetPasswordController,
+  SendEmailController,
 } = require("../controllers/auth");
 
 const { requireSignIn, isAdmin } = require("../middlewares/auth");
@@ -12,6 +15,9 @@ const router = express.Router();
 router.post("/signup", SignupController);
 router.get("/verify/:token", VerifyController);
 router.post("/login", LoginController);
+router.post("/send-otp", SendOtpController);
+router.post("/reset-password", ResetPasswordController);
+router.post("/send-email", SendEmailController);
 router.get("/user-auth", requireSignIn, async (req, res) => {
   const user = await User.findById(req.user._id);
   console.log(user);

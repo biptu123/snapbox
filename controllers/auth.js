@@ -2,6 +2,7 @@ const {
   hashPassword,
   comparePassword,
   generateVerificationToken,
+  generateOTP,
 } = require("../helpers/auth");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
@@ -58,7 +59,7 @@ const SignupController = async (req, res) => {
     });
 
     const emailresponse = await transporter.sendMail({
-      from: "your_email@example.com",
+      from: process.env.MAILER_ID,
       to: email,
       subject: "Email Verification",
       html: `<p>Hello ${username},</p><p>Please click <a href="${verificationURL}">here</a> to verify your email address.</p>`,
@@ -152,8 +153,153 @@ const LoginController = async (req, res) => {
   }
 };
 
+const SendOtpController = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // validation
+    if (!email) {
+      return res.status(400).send({
+        success: false,
+        message: "Email is required",
+      });
+    }
+
+    // Additional validation (e.g., email format) can be added here
+
+    let user = await User.findOne({ email });
+
+    if (!(user && user.isVerified)) {
+      return res.status(400).send({
+        success: false,
+        message: "User is not registered",
+      });
+    }
+
+    // Generate email verification token
+    const otp = generateOTP();
+
+    user.otp = otp;
+
+    // Save the user with verification token
+    await user.save();
+
+    const emailresponse = await transporter.sendMail({
+      from: process.env.MAILER_ID,
+      to: email,
+      subject: "Reset Password",
+      html: `<p>Hello ${user.username},</p><p>your otp is ${otp}</p>`,
+    });
+
+    res.status(200).send({
+      success: true,
+      message: "Otp sent to your email.",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+const ResetPasswordController = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { email, otp, password } = req.body;
+
+    // validation
+    if (!email || !otp || !password) {
+      return res.status(400).send({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
+    // Additional validation (e.g., email format) can be added here
+
+    let user = await User.findOne({ email });
+
+    console.log(user);
+
+    if (!(user && user.isVerified)) {
+      return res.status(400).send({
+        success: false,
+        message: "User is not registered",
+      });
+    }
+
+    if (Number(otp) !== user.otp) {
+      return res.status(400).send({
+        success: false,
+        message: "Unauthorized access",
+      });
+    }
+
+    // Generate email verification token
+    const hashedPassword = await hashPassword(password);
+
+    // Save the user with verification token
+    user.password = hashedPassword;
+    user.otp = null;
+
+    await user.save();
+
+    res.status(200).send({
+      success: true,
+      message: "Password Changed successfully",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+const SendEmailController = async (req, res) => {
+  try {
+    const { name, email, comment } = req.body;
+
+    // validation
+    if (!email || !name || !comment) {
+      return res.status(400).send({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+    // Create email message
+    const mailOptions = {
+      from: email,
+      to: process.env.MAILER_ID,
+      subject: "New Contact Form Submission",
+      html: `
+              <h2>New Contact Form Submission</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Comment:</strong> ${comment}</p>
+            `,
+    };
+
+    const emailresponse = await transporter.sendMail(mailOptions);
+
+    res.status(200).send({
+      success: true,
+      message: "Message sent successfully",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
 module.exports = {
   LoginController,
   SignupController,
   VerifyController,
+  SendOtpController,
+  ResetPasswordController,
+  SendEmailController,
 };

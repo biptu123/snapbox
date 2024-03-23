@@ -19,6 +19,7 @@ import BCardService from "./pages/BCardService/BCardService.jsx";
 import ManageCard from "./pages/ManageCard/ManageCard.jsx";
 import PaymentList from "./pages/Admin/PaymentList.jsx";
 import TeamMembers from "./pages/Team/Team.jsx";
+import Reset from "./pages/ReserPassword/Reset.jsx";
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/about" Component={About} />
         <Route path="/contact" Component={Contact} />
         <Route path="/team" Component={TeamMembers} />
+        <Route path="/reset" Component={Reset} />
 
         <Route path="/verify/:token" Component={Verify} />
         <Route path="/:username" Component={UserCard} />

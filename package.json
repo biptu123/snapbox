@@ -23,9 +23,12 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.9",
     "nodemon": "^3.0.2",
+    "otp-generator": "^4.0.1",
     "razorpay": "^2.9.2",
+    "react-intersection-observer": "^9.8.1",
     "react-responsive-carousel": "^3.2.23",
     "react-simply-carousel": "^9.1.2",
+    "react-transition-group": "^4.4.5",
     "slugify": "^1.6.6",
     "url": "^0.11.3"
   }
