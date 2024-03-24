@@ -58,12 +58,20 @@ const SignupController = async (req, res) => {
       pathname: `/verify/${verificationToken}`,
     });
 
-    const emailresponse = await transporter.sendMail({
-      from: process.env.MAILER_ID,
-      to: email,
-      subject: "Email Verification",
-      html: `<p>Hello ${username},</p><p>Please click <a href="${verificationURL}">here</a> to verify your email address.</p>`,
-    });
+    try {
+      const emailresponse = await transporter.sendMail({
+        from: process.env.MAILER_ID,
+        to: email,
+        subject: "Email Verification",
+        html: `<p>Hello ${username},</p><p>Please click <a href="${verificationURL}">here</a> to verify your email address.</p>`,
+      });
+      console.log(emailresponse);
+    } catch (error) {
+      console.log(error.message);
+      throw new Error(error);
+    }
+
+    // console.log(emailresponse);
 
     res.status(200).send({
       success: true,
