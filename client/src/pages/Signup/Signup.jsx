@@ -20,6 +20,8 @@ const Signup = () => {
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
+      setLoading(false);
+
       return;
     }
 
@@ -29,7 +31,6 @@ const Signup = () => {
         email,
         password,
       });
-      setLoading(false);
 
       toast.success(response.data.message);
       if (response.data.success) {
@@ -44,6 +45,7 @@ const Signup = () => {
       toast.error(err?.response?.data?.message);
       setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
