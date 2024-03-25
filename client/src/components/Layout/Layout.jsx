@@ -26,8 +26,8 @@ const WhatsappButton = styled.a`
 `;
 
 const Layout = (props) => {
-  const phoneNumber = "+916000167276";
-  const message = "Hello";
+  const phoneNumber = "+91 7099481497";
+  const message = "Hello Uniquesnapbox! ";
   return (
     <>
       <Header />

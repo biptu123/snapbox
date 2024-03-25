@@ -4,9 +4,9 @@ const nodemailer = require("nodemailer");
 const mailerPass = process.env.MAILER_PASS.replace(/\\n/g, "\n");
 
 const transporter = nodemailer.createTransport({
-  host: "mail.uniquesnapbox.in",
-  port: 465,
-  secure: true,
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.MAILER_ID,
     pass: mailerPass,
