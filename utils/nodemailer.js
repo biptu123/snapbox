@@ -5,12 +5,14 @@ const mailerPass = process.env.MAILER_PASS.replace(/\\n/g, "\n");
 
 const transporter = nodemailer.createTransport({
   host: process.env.MAILER_HOST,
-  port: process.env.MAILER_PORT,
-  secure: process.env.MAILER_IS_SECURE,
+  port: Number(process.env.MAILER_PORT),
+  secure: process.env.MAILER_IS_SECURE === "true",
   auth: {
     user: process.env.MAILER_ID,
     pass: mailerPass,
   },
 });
+
+console.log(transporter);
 
 module.exports = transporter;
