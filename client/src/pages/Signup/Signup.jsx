@@ -120,7 +120,7 @@ const Signup = () => {
                 </div>
                 <div className="d-flex justify-content-around align-items-center mb-4">
                   {/* Checkbox */}
-                  Don't have an account <Link to="/signup">Register now</Link>
+                  Already registered <Link to="/signin">Signin now</Link>
                 </div>
                 {/* Submit button */}
                 <button

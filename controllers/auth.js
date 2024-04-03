@@ -24,6 +24,7 @@ const SignupController = async (req, res) => {
     // Additional validation (e.g., email format) can be added here
 
     let user = await User.findOne({ $or: [{ email }, { username }] });
+    console.log(user);
 
     if (user && user.isVerified) {
       return res.status(400).send({
