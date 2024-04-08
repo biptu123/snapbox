@@ -56,6 +56,14 @@ const CardInfoSchema = new mongoose.Schema(
 
     visiting_hours: [String],
     business_hours: [String],
+    documents: [
+      {
+        name: String,
+        url: String,
+        public_id: String,
+        file_type: String,
+      },
+    ],
   },
   { timestamps: true }
 );

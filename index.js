@@ -27,6 +27,7 @@ app.use("/api/v1/user", require("./routes/user"));
 app.use("/api/v1/subscribe", require("./routes/payment"));
 app.use("/api/v1/cardInfo", require("./routes/cardInfo"));
 app.use("/api/v1/admin", require("./routes/admin"));
+app.use("/api/v1/documents", require("./routes/documents"));
 
 // rest api
 app.use("*", function (req, res) {
