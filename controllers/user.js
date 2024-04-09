@@ -2,6 +2,7 @@ const User = require("../models/User");
 const CardInfo = require("../models/CardInfo");
 const Payment = require("../models/Payment");
 const slugify = require("slugify");
+const transporter = require("../utils/nodemailer");
 const cloudinary = require("../utils/cloudinary");
 
 const getUserController = async (req, res) => {
@@ -254,6 +255,46 @@ const getDetailsController = async (req, res) => {
   }
 };
 
+const applyController = async (req, res) => {
+  try {
+    const { name, email, phoneno, service } = req.body;
+
+    // validation
+    if (!email || !name || !phoneno || !service) {
+      return res.status(400).send({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+    // Create email message
+    const mailOptions = {
+      from: "uniquesnapbox@gmail.com",
+      to: process.env.MAILER_ID,
+      subject: `New Application For ${service}`,
+      html: `
+              <h2>New Application For ${service}</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Phone No:</strong> ${phoneno}</p>
+            `,
+    };
+
+    const emailresponse = await transporter.sendMail(mailOptions);
+    console.log(emailresponse);
+
+    res.status(200).send({
+      success: true,
+      message: "Application sent successfully. We will contact you soon",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
 module.exports = {
   getUserController,
   getAllUserController,
@@ -265,4 +306,5 @@ module.exports = {
   getVerifiedPaymentsController,
   makeAdminController,
   getDetailsController,
+  applyController,
 };

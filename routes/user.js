@@ -5,9 +5,11 @@ const {
   getCardInfoController,
   getPaymentsController,
   updateUserController,
+  applyController,
 } = require("../controllers/user");
 const router = express.Router();
 
+router.post("/apply", applyController);
 router.get("/cardinfo/:username", getCardInfoController);
 router.get("/payments/:id", getPaymentsController);
 router.get("/", requireSignIn, getUserController);

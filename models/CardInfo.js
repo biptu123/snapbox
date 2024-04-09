@@ -6,6 +6,10 @@ const CardInfoSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    type: {
+      type: String,
+      default: "free",
+    },
     expiry_date: {
       type: Date,
       required: true,
@@ -62,6 +66,7 @@ const CardInfoSchema = new mongoose.Schema(
         url: String,
         public_id: String,
         file_type: String,
+        folder: String,
       },
     ],
   },

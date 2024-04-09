@@ -113,6 +113,7 @@ const approvePaymentController = async (req, res) => {
     const newExpiryDate = new Date(card.expiry_date);
     newExpiryDate.setDate(newExpiryDate.getDate() + parseInt(payment.days));
     card.expiry_date = newExpiryDate;
+    card.type = payment.type;
 
     // Save updated card info
     await card.save();

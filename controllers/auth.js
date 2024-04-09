@@ -279,7 +279,7 @@ const SendEmailController = async (req, res) => {
     }
     // Create email message
     const mailOptions = {
-      from: email,
+      from: "uniquesnapbox@gmail.com",
       to: process.env.MAILER_ID,
       subject: "New Contact Form Submission",
       html: `

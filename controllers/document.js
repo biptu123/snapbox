@@ -8,6 +8,15 @@ const { comparePassword } = require("../helpers/auth");
 
 const uploadDocumentController = async (req, res) => {
   try {
+    const folder = req.body.folder;
+
+    if (!folder) {
+      return res.status(400).send({
+        success: false,
+        message: "Folder name is required",
+      });
+    }
+
     const cardInfo = await CardInfo.findOne({ user: req.user._id });
     const files = Array.isArray(req.files.documents)
       ? req.files.documents
@@ -21,7 +30,7 @@ const uploadDocumentController = async (req, res) => {
         // Pipe the stream to Cloudinary upload stream
         const uploadStream = cloudinary.uploader.upload_stream(
           {
-            folder: "documents",
+            folder: folder,
             resource_type: "auto", // Let Cloudinary detect the resource type
           },
           (error, result) => {
@@ -47,6 +56,7 @@ const uploadDocumentController = async (req, res) => {
         url: documentResult.secure_url,
         public_id: documentResult.public_id,
         file_type: file.mimetype, // Save the type based on the mimetype
+        folder: folder,
       });
     }
 
