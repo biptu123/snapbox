@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const CardInfo = require("../models/CardInfo");
+const transporter = require("../utils/nodemailer");
 const cloudinary = require("../utils/cloudinary");
 
 const uploadImagesController = async (req, res) => {
@@ -230,6 +231,51 @@ const updateCardController = async (req, res) => {
     });
   }
 };
+const bookAppointmentController = async (req, res) => {
+  try {
+    const { name, user, date, time, phoneno } = req.body;
+
+    // validation
+    if (!user || !name || !date || !time || !phoneno) {
+      return res.status(400).send({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+    const cardOwner = await User.findById(user);
+    const email = user.email;
+    // Create email message
+    const mailOptions = {
+      from: process.env.MAILER_ID,
+      to: email,
+      subject: "New Appointment",
+      html: `
+              <h2>New Appointment</h2>
+              <p>Hello <strong>${cardOwner.username}</strong> An appointment has been booked by an user using your visiting card </p>
+              <p><strong>Here are the Details: </strong></p>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Phoneno:</strong> ${phoneno}</p>
+              <p><strong>Date:</strong> ${date}</p>
+              <p><strong>Time:</strong> ${time}</p>
+              <p><strong>You can confirm the appointment by calling using the given number</strong></p>
+            `,
+    };
+
+    const emailresponse = await transporter.sendMail(mailOptions);
+
+    res.status(200).send({
+      success: true,
+      message:
+        "Your Appointment has been booked successfully They will call you to confirm in a while",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
 
 module.exports = {
   uploadImagesController,
@@ -237,4 +283,5 @@ module.exports = {
   updateServiceController,
   updateScheduleController,
   updateCardController,
+  bookAppointmentController,
 };

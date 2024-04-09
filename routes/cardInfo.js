@@ -6,6 +6,7 @@ const {
   updateServiceController,
   updateScheduleController,
   updateCardController,
+  bookAppointmentController,
 } = require("../controllers/cardInfo");
 const router = express.Router();
 
@@ -14,5 +15,6 @@ router.post("/basic", requireSignIn, updateBasicController);
 router.post("/services", requireSignIn, updateServiceController);
 router.post("/schedule", requireSignIn, updateScheduleController);
 router.post("/update", requireSignIn, updateCardController);
+router.post("/appointment", bookAppointmentController);
 
 module.exports = router;
