@@ -243,7 +243,8 @@ const bookAppointmentController = async (req, res) => {
       });
     }
     const cardOwner = await User.findById(user);
-    const email = user.email;
+    console.log(cardOwner);
+    const email = cardOwner.email;
     // Create email message
     const mailOptions = {
       from: process.env.MAILER_ID,
@@ -260,6 +261,7 @@ const bookAppointmentController = async (req, res) => {
               <p><strong>You can confirm the appointment by calling using the given number</strong></p>
             `,
     };
+    console.log(mailOptions);
 
     const emailresponse = await transporter.sendMail(mailOptions);
 

@@ -543,7 +543,7 @@ Add a <Suspense fallback=...> component higher in the tree to provide a loading 
   justify-content: space-between;
   row-gap: 20px;
   margin-bottom: 20px;
-`,kRe=yr.button`
+`,kRe=yr.div`
   width: 47%;
   padding: 10px;
   border: 2px solid white;
@@ -556,7 +556,7 @@ Add a <Suspense fallback=...> component higher in the tree to provide a loading 
     background: white;
     color: black;
   }
-`,ORe=e=>{var d;const[t,r]=E.useState(null),[n,i]=E.useState(""),[a,o]=E.useState(""),[s,A]=E.useState(""),[l,c]=E.useState(!1),u=h=>{r(h)},f=async h=>{var p,B;h.preventDefault(),c(!0);try{const C=await Gt.post("/api/v1/cardInfo/appointment",{name:a,date:s,time:t,phoneno:n,user:e==null?void 0:e.user});console.log(C),C.data.success?(setCardInfo(C.data.cardInfo),lt.success("Your appointment has been booked We will call you back")):lt.error(C.data.message||"Failed to book appointment")}catch(C){console.error("Error :",C),lt.error(((B=(p=C==null?void 0:C.response)==null?void 0:p.data)==null?void 0:B.message)||"Failed to book appointment")}c(!1)};return g.jsxs(g.Fragment,{children:[g.jsxs(Ef,{children:["Make ",g.jsx("br",{}),"an appointment"]}),g.jsxs(URe,{onSubmit:f,children:[g.jsx(AS,{children:"Date:"}),g.jsx($I,{type:"date",value:s,onChange:h=>A(h.target.value)}),g.jsx($I,{type:"text",placeholder:"Enter Your Name",value:a,onChange:h=>o(h.target.value)}),g.jsx($I,{type:"text",placeholder:"Enter Your Phone Number",value:n,onChange:h=>i(h.target.value)}),g.jsx(AS,{children:"Hour:"}),g.jsx(NRe,{children:(d=e==null?void 0:e.visiting_hours)==null?void 0:d.map((h,p)=>g.jsx(kRe,{type:"text",onClick:()=>u(h),isselected:h===t,children:h},p))}),g.jsx(BX,{type:"submit",disabled:l,children:"Make an appointment"})]})]})},I5=yr.h6`
+`,ORe=e=>{var d;const[t,r]=E.useState(null),[n,i]=E.useState(""),[a,o]=E.useState(""),[s,A]=E.useState(""),[l,c]=E.useState(!1),u=h=>{r(h)},f=async h=>{var p,B;h.preventDefault(),c(!0);try{const C=await Gt.post("/api/v1/cardInfo/appointment",{name:a,date:s,time:t,phoneno:n,user:e==null?void 0:e.user});console.log(C),C.data.success?lt.success("Your appointment has been booked We will call you back"):lt.error(C.data.message||"Failed to book appointment")}catch(C){console.error("Error :",C),lt.error(((B=(p=C==null?void 0:C.response)==null?void 0:p.data)==null?void 0:B.message)||"Failed to book appointment")}c(!1)};return g.jsxs(g.Fragment,{children:[g.jsxs(Ef,{children:["Make ",g.jsx("br",{}),"an appointment"]}),g.jsxs(URe,{onSubmit:f,children:[g.jsx(AS,{children:"Date:"}),g.jsx($I,{type:"date",value:s,onChange:h=>A(h.target.value)}),g.jsx($I,{type:"text",placeholder:"Enter Your Name",value:a,onChange:h=>o(h.target.value)}),g.jsx($I,{type:"text",placeholder:"Enter Your Phone Number",value:n,onChange:h=>i(h.target.value)}),g.jsx(AS,{children:"Hour:"}),g.jsx(NRe,{children:(d=e==null?void 0:e.visiting_hours)==null?void 0:d.map((h,p)=>g.jsx(kRe,{type:"text",onClick:()=>u(h),isselected:h===t,children:h},p))}),g.jsx(BX,{type:"submit",disabled:l,children:"Make an appointment"})]})]})},I5=yr.h6`
   color: #f3eded;
   text-align: center;
   margin: 5px 0;
