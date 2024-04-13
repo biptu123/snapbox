@@ -5,7 +5,12 @@ import Sidebar from "./Sidebar";
 const AdminLayout = (props) => {
   return (
     <div>
-      <div>
+      <div
+        style={{
+          height: "100vh",
+          overflowY: "hidden",
+        }}
+      >
         <Header />
         <Sidebar />
         <div className="content-wrapper">
@@ -33,7 +38,15 @@ const AdminLayout = (props) => {
           </div>
 
           <section className="content">
-            <div className="container-fluid">{props.children}</div>
+            <div
+              className="container-fluid"
+              style={{
+                height: "80vh",
+                overflowY: "auto",
+              }}
+            >
+              {props.children}
+            </div>
           </section>
         </div>
       </div>

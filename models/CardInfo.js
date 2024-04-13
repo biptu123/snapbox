@@ -14,6 +14,10 @@ const CardInfoSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    starting_date: {
+      type: Date,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["active", "inactive"],

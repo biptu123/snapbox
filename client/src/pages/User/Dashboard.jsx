@@ -183,23 +183,23 @@ const Dashboard = () => {
                     <div className="tab-content">
                       <div className="active tab-pane" id="activity">
                         <div className="card-body p-0">
-                          <table className="table table-sm">
-                            <thead>
+                          <table className="table table-bordered table-hover text-dark">
+                            <thead className="thead-light">
                               <tr>
-                                <th>#</th>
-                                <th>Service</th>
-                                <th>Started At</th>
-                                <th>Expires At</th>
+                                <th scope="col">#</th>
+                                <th scope="col">Service</th>
+                                <th scope="col">Started At</th>
+                                <th scope="col">Expires At</th>
                               </tr>
                             </thead>
                             <tbody>
                               {cardInfo && (
                                 <tr>
-                                  <td>1.</td>
+                                  <th scope="row">1.</th>
                                   <td>Smart B Card</td>
                                   <td>
                                     {new Date(
-                                      cardInfo?.createdAt
+                                      cardInfo?.starting_date
                                     ).toLocaleDateString(undefined, {
                                       year: "2-digit",
                                       month: "short",

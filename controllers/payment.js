@@ -34,6 +34,7 @@ const freeSubscribeController = async (req, res) => {
     // Create a new CardInfo document with the calculated expiry date
     const card = await CardInfo.create({
       user: req.user._id,
+      starting_date: new Date(),
       expiry_date: tenDaysLater,
     });
 
@@ -54,7 +55,7 @@ const freeSubscribeController = async (req, res) => {
 };
 
 const paidSubscribeController = async (req, res) => {
-  const { amount, days, transactionId } = req.body;
+  const { amount, days, transactionId, type } = req.body;
   try {
     const user = await User.findById(req.user._id);
     if (!user)
@@ -68,7 +69,7 @@ const paidSubscribeController = async (req, res) => {
       amount: parseInt(amount),
       transaction_id: transactionId,
       days: days,
-      type: amount === 599 ? "Basic Plan" : "Premium Plan",
+      type,
     });
 
     return res.status(200).send({
@@ -77,7 +78,13 @@ const paidSubscribeController = async (req, res) => {
       message: "Payment successfull Wait until we verify the transaction",
     });
   } catch (error) {
-    console.log(error);
+    if (error.code === 11000 && error.keyPattern.transaction_id === 1) {
+      return res.status(401).send({
+        success: false,
+        message:
+          "Transaction ID already exists. If you still have any problem please contact us",
+      });
+    }
     return res.status(401).send({
       success: false,
       message: "Internal Server Error",
@@ -99,19 +106,16 @@ const approvePaymentController = async (req, res) => {
 
     // If card doesn't exist, create a new one
     if (!card) {
-      const currentDate = new Date();
-      const newExpiryDate = new Date(
-        currentDate.getTime() + 15 * 24 * 60 * 60 * 1000
-      );
       card = await CardInfo.create({
         user: payment.user,
-        expiry_date: newExpiryDate, // Initialize expiry date to current date
+        starting_date: new Date(),
       });
     }
 
     // Calculate expiry date by adding payment days to current date
-    const newExpiryDate = new Date(card.expiry_date);
+    const newExpiryDate = new Date();
     newExpiryDate.setDate(newExpiryDate.getDate() + parseInt(payment.days));
+    card.starting_date = new Date();
     card.expiry_date = newExpiryDate;
     card.type = payment.type;
 
@@ -140,16 +144,7 @@ const approvePaymentController = async (req, res) => {
 
 const rejectPaymentController = async (req, res) => {
   try {
-    const payment = await Payment.findById(req.params.id);
-    if (!payment)
-      return res.status(404).send({
-        success: false,
-        message: "Payment not found",
-      });
-
-    payment.isVerified = null;
-    await payment.save();
-
+    const payment = await Payment.findByIdAndDelete(req.params.id);
     return res.status(200).send({
       success: true,
       message: "Payment rejected",
