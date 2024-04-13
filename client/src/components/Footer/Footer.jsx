@@ -38,10 +38,12 @@ const Footer = () => {
         <div className="footer-col">
           <h3>Contact Us</h3>
           <p>
-            <a href="mailto:admin@uniquesnapbox.in">admin@uniquesnapbox.in</a>
+            <a href="mailto:Officesnapbox.official@gmail.com">
+              Officesnapbox.official@gmail.com
+            </a>
           </p>
           <p>
-            <a href="tel:+91 02269620313">+91 02269620313</a>
+            <a href="tel:+91 7099481497">+91 7099481497</a>
           </p>
           <p>
             <span>DAKBANGLOW ROAD, KARIMGANJ, ASSAM, 788710</span>
