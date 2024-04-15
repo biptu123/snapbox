@@ -10,7 +10,7 @@ const uploadDocumentController = async (req, res) => {
   try {
     const folder = req.body.folder;
 
-    if (!folder) {
+    if (!folder || folder?.trim() === "") {
       return res.status(400).send({
         success: false,
         message: "Folder name is required",
@@ -56,7 +56,7 @@ const uploadDocumentController = async (req, res) => {
         url: documentResult.secure_url,
         public_id: documentResult.public_id,
         file_type: file.mimetype, // Save the type based on the mimetype
-        folder: folder,
+        folder: folder || "documents",
       });
     }
 
