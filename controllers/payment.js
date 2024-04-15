@@ -57,6 +57,12 @@ const freeSubscribeController = async (req, res) => {
 const paidSubscribeController = async (req, res) => {
   const { amount, days, transactionId, type } = req.body;
   try {
+    if (!transactionId) {
+      return res.status(401).send({
+        success: false,
+        message: "Transaction Id required",
+      });
+    }
     const user = await User.findById(req.user._id);
     if (!user)
       return res.status(401).send({
