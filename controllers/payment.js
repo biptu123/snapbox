@@ -22,7 +22,6 @@ const freeSubscribeController = async (req, res) => {
     const payment = await Payment.create({
       user: req.user._id,
       amount: 0,
-      transaction_id: "N/A",
       isVerified: true,
       type: "Free Plan",
     });
@@ -47,6 +46,7 @@ const freeSubscribeController = async (req, res) => {
       message: "Payment successfull",
     });
   } catch (error) {
+    console.log(error);
     return res.status(401).send({
       success: false,
       message: "Internal Server Error",
