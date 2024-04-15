@@ -53,6 +53,7 @@ const uploadImagesController = async (req, res) => {
       cardInfo,
     });
   } catch (error) {
+    console.log(error);
     return res.status(401).send({
       success: false,
       message: "Internal Server Error",

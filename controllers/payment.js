@@ -109,15 +109,19 @@ const approvePaymentController = async (req, res) => {
       card = await CardInfo.create({
         user: payment.user,
         starting_date: new Date(),
+        expiry_date: new Date(),
       });
     }
 
+    console.log(card);
     // Calculate expiry date by adding payment days to current date
     const newExpiryDate = new Date();
     newExpiryDate.setDate(newExpiryDate.getDate() + parseInt(payment.days));
     card.starting_date = new Date();
     card.expiry_date = newExpiryDate;
     card.type = payment.type;
+
+    console.log(newExpiryDate);
 
     // Save updated card info
     await card.save();
@@ -134,7 +138,7 @@ const approvePaymentController = async (req, res) => {
       message: "Payment approved",
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return res.status(500).send({
       success: false,
       message: "Internal Server Error",
