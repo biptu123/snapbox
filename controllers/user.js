@@ -257,6 +257,7 @@ const getDetailsController = async (req, res) => {
 
 const applyController = async (req, res) => {
   try {
+    console.log(req.body);
     const { name, email, phoneno, service } = req.body;
 
     // validation
