@@ -387,7 +387,7 @@ const Home = () => {
               <div className="basic-price-info">
                 <h4>Standard Plan</h4>
                 <div className="price">
-                  <p>₹599</p>
+                  <p>899</p>
                 </div>
                 {/*price*/}
                 <div className="price-list">
@@ -410,7 +410,7 @@ const Home = () => {
               <div className="basic-price-info">
                 <h4>Premium Plan</h4>
                 <div className="price">
-                  <p>₹899</p>
+                  <p>₹1199</p>
                 </div>
                 {/*price*/}
                 <div className="price-list">

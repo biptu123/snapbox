@@ -41,7 +41,7 @@ const Layout = (props) => {
   return (
     <>
       <Header />
-      <div style={{ marginTop: "100px" }}>{props.children}</div>
+      <div style={{ marginTop: "120px" }}>{props.children}</div>
       <WhatsappButton href={generateWhatsappLink()}>
         <IoLogoWhatsapp size={70} color="green" />
       </WhatsappButton>

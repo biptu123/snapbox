@@ -87,8 +87,10 @@ const getCardInfoController = async (req, res) => {
         message: "Card info not found for this user",
       });
 
-    const currentDate = new Date().setHours(0, 0, 0, 0); // Get current date without time
-    if (cardInfo.expiry_date < currentDate) {
+    const currentDate = new Date().setHours(0, 0, 0, 0);
+    const expiryDate = new Date(cardInfo.expiry_date).setHours(0, 0, 0, 0);
+
+    if (expiryDate < currentDate) {
       return res.status(401).send({
         success: false,
         message: "Plan has expired",

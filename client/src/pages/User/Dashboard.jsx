@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../slices/userSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Settings from "./Settings";
@@ -21,6 +21,7 @@ const Dashboard = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
+  const location = useLocation();
 
   useEffect(() => {
     const getCardInfo = async () => {
@@ -128,7 +129,11 @@ const Dashboard = () => {
                           <b>Your Card</b>
                         </a>
                         <a
-                          onClick={() => navigate("/manage-card")}
+                          onClick={() =>
+                            navigate("/manage-card", {
+                              state: location.pathname,
+                            })
+                          }
                           className="btn btn-outline-success btn-block"
                         >
                           <b>Manage Card</b>

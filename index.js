@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const connectDB = require("./config/db");
 const app = express();
 const path = require("path");
+const cron = require("node-cron");
 
 // configure dotenv
 dotenv.config();
@@ -32,6 +33,14 @@ app.use("/api/v1/documents", require("./routes/documents"));
 // rest api
 app.use("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./client/dist/index.html"));
+});
+
+// Schedule the task to run every day at a specific time, e.g., 10:00 AM
+const { notifyUsersWithExpiringCards } = require("./controllers/notification");
+
+cron.schedule("19 17 * * *", () => {
+  console.log("Sending mail notification");
+  notifyUsersWithExpiringCards();
 });
 
 // listen

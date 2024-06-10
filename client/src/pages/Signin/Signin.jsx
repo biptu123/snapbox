@@ -18,6 +18,11 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password.length < 4) {
+      toast.error("Password must be at least 4 characters long from Frontend");
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await axios.post(`/api/v1/auth/login`, {
@@ -78,6 +83,7 @@ const Signin = () => {
                     placeholder="Enter a valid username or email"
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="form-group mb-4">
@@ -91,6 +97,7 @@ const Signin = () => {
                     className="form-control"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="mb-4">

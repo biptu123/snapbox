@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -22,7 +22,7 @@ const Hamburger = styled.div`
   position: fixed;
   right: 10px;
   z-index: 1000;
-  top: 10px;
+  top: 20px;
   display: none;
   @media (max-width: 1090px) {
     display: block;
@@ -57,18 +57,46 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
   const navigate = useNavigate();
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const handleScroll = () => {
+    setScrollPosition(window.scrollY);
+  };
 
   const handleMenuItemClick = () => {
     setIsOpen(false); // Close the menu after clicking a menu item
   };
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div style={{ position: "relative" }}>
-      <header id="home" className="fixed-header">
+      <header
+        id="home"
+        className="fixed-header"
+        style={{
+          background: scrollPosition < 100 ? "transparent" : "#a5c3e2",
+          transition: "background 0.5s ease-in-out",
+        }}
+      >
         <div className="container">
           <div className="top-bar d-flex justify-content-between align-items-center">
             <div className="nav-col">
-              <div className="logo">
+              <div
+                className="logo"
+                style={{
+                  height: "90px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
                 <img src={logo} className="img-responsive" alt="logo" />
               </div>
 
@@ -80,7 +108,7 @@ const Header = () => {
                 <NavLink to="/user">My Account</NavLink>
               </Menu>
             </div>
-            <StartButton className="">
+            <StartButton className="mb-3">
               <button
                 className="btn btn-outline-dark"
                 type="button"

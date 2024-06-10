@@ -29,11 +29,12 @@ const freeSubscribeController = async (req, res) => {
     // Calculate the expiry date 15 days from now
     const tenDaysLater = new Date();
     tenDaysLater.setDate(tenDaysLater.getDate() + 15);
+    tenDaysLater.setHours(0, 0, 0, 0);
 
     // Create a new CardInfo document with the calculated expiry date
     const card = await CardInfo.create({
       user: req.user._id,
-      starting_date: new Date(),
+      starting_date: new Date().setHours(0, 0, 0, 0),
       expiry_date: tenDaysLater,
     });
 
@@ -114,8 +115,8 @@ const approvePaymentController = async (req, res) => {
     if (!card) {
       card = await CardInfo.create({
         user: payment.user,
-        starting_date: new Date(),
-        expiry_date: new Date(),
+        starting_date: new Date().setHours(0, 0, 0, 0),
+        expiry_date: new Date().setHours(0, 0, 0, 0),
       });
     }
 
@@ -123,7 +124,8 @@ const approvePaymentController = async (req, res) => {
     // Calculate expiry date by adding payment days to current date
     const newExpiryDate = new Date();
     newExpiryDate.setDate(newExpiryDate.getDate() + parseInt(payment.days));
-    card.starting_date = new Date();
+    newExpiryDate.setHours(0, 0, 0, 0);
+    card.starting_date = new Date().setHours(0, 0, 0, 0);
     card.expiry_date = newExpiryDate;
     card.type = payment.type;
 
