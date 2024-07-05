@@ -122,13 +122,6 @@ const LoginController = async (req, res) => {
       });
     }
 
-    if (password?.length < 4) {
-      return res.status(500).json({
-        success: false,
-        message: "Password should be 4 digit long from server",
-      });
-    }
-
     const user = await User.findOne({
       $or: [{ email: identifier }, { username: identifier }],
     });

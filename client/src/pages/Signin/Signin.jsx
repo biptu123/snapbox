@@ -18,11 +18,6 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password.length < 4) {
-      toast.error("Password must be at least 4 characters long from Frontend");
-      return;
-    }
-
     setLoading(true);
     try {
       const response = await axios.post(`/api/v1/auth/login`, {
