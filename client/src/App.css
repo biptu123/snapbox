@@ -98,12 +98,16 @@ p {
 header {
   z-index: 1;
   position: relative;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 
 .nav-col {
   float: left;
   width: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 20px;
 }
 
 .cnt-info-col {
@@ -112,23 +116,14 @@ header {
   width: 25%;
 }
 
-.logo {
-  float: left;
-  width: 30%;
-}
-
 .menu {
   float: right;
   width: 70%;
 }
 
-.logo img {
-  width: 180px;
-}
-
 .menu a {
   text-decoration: none;
-  padding: 22px;
+  padding: 0 22px;
   display: inline-block;
   color: #4d4d4d;
   transition: all 0.5s ease;
@@ -900,9 +895,9 @@ hr.footer-hr {
   margin: 60px 0px 20px;
 }
 @media screen and (max-width: 768px) {
-  #home {
+  /* #home {
     display: none;
-  }
+  } */
 
   #mobile-menu {
     display: block;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/images/logo.png";
+// import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/snapbox.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FaBarsStaggered } from "react-icons/fa6";
@@ -51,6 +52,10 @@ const MobileMenuItem = styled(NavLink)`
   text-decoration: none;
 `;
 
+const Logo = styled.img`
+  height: 100%;
+`;
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -88,16 +93,17 @@ const Header = () => {
           <div className="top-bar d-flex justify-content-between align-items-center">
             <div className="nav-col">
               <div
-                className="logo"
                 style={{
-                  height: "90px",
+                  float: "left",
+                  height: "100px",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   cursor: "pointer",
                 }}
+                onClick={() => navigate("/")}
               >
-                <img src={logo} className="img-responsive" alt="logo" />
+                <Logo src={logo} className="" alt="logo" />
               </div>
 
               <Menu className="menu">
@@ -108,7 +114,7 @@ const Header = () => {
                 <NavLink to="/user">My Account</NavLink>
               </Menu>
             </div>
-            <StartButton className="mb-3">
+            <StartButton className="">
               <button
                 className="btn btn-outline-dark"
                 type="button"
