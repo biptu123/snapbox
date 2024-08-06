@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import homeImg from "../../assets/images/expand-home-img.png";
+import React, { useCallback, useEffect, useState } from "react";
 import homeFaqImg from "../../assets/images/home-faq.png";
-import serviceImg1 from "../../assets/images/home-faeture-img/service_img1.png";
-import serviceImg2 from "../../assets/images/home-faeture-img/service_img2.png";
-import serviceImg3 from "../../assets/images/home-faeture-img/service_img3.png";
-import serviceImg4 from "../../assets/images/home-faeture-img/service_img4.png";
 import Hero from "./Hero";
 import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
 import AboutSnapbox from "./AboutSnapbox";
+import { useInView } from "react-intersection-observer";
+import Features from "./Features";
+import Experience from "./Experience";
 
 const AnimatedNumber = ({ value }) => {
   const [count, setCount] = useState(0);
+  const { ref, inView } = useInView({ threshold: 0.1 });
 
-  useEffect(() => {
+  // Function to start the animation
+  const startAnimation = useCallback(() => {
     const animationDuration = 2000; // Duration in milliseconds
     const animationSteps = 100; // Number of steps
     const stepSize = Math.ceil(value / animationSteps);
@@ -38,7 +38,16 @@ const AnimatedNumber = ({ value }) => {
     return () => clearInterval(interval);
   }, [value]);
 
-  return <span>{count}</span>;
+  useEffect(() => {
+    if (inView) {
+      // Reset count before starting animation
+      setCount(0);
+      // Start the animation when in view
+      startAnimation();
+    }
+  }, [inView, startAnimation]);
+
+  return <span ref={ref}>{count}</span>;
 };
 const Home = () => {
   return (
@@ -57,56 +66,8 @@ const Home = () => {
           </div>
           {/*text-center*/}
 
-          <section className="faeture-col-par">
-            <div className="container">
-              <div className="feature-col fade-in">
-                <h3>Discover, Digital merketing</h3>
-                <img
-                  src={serviceImg1}
-                  className="img-responsive"
-                  alt="service"
-                />
-                <h4>Discover, Explore &amp; understanding the product</h4>
-                {/*                </div>feature-col*/}
-              </div>
-              {/*feature-col*/}
-              <div className="feature-col fade-in">
-                <h3>Discover, Data Entry Work</h3>
-                <img
-                  src={serviceImg2}
-                  className="img-responsive"
-                  alt="service"
-                />
-                <h4>Discover, Explore &amp; Work with us</h4>
-                {/*                </div>feature-col*/}
-              </div>
-              {/*feature-col*/}
-              <div className="feature-col fade-in">
-                <h3>Discover, Free Consulting Services</h3>
-                <img
-                  src={serviceImg3}
-                  className="img-responsive"
-                  alt="service"
-                />
-                <h4>Discover, Explore &amp; Unlock Growth of your Buisness</h4>
-                {/*                </div>feature-col*/}
-              </div>
-              {/*feature-col*/}
-              <div className="feature-col fade-in">
-                <h3>Discover, SEO</h3>
-                <img
-                  src={serviceImg4}
-                  className="img-responsive"
-                  alt="service"
-                />
-                <h4>Discover, Explore &amp; Boost your Website Ranking</h4>
-                {/*                </div>feature-col*/}
-              </div>
-              {/*feature-col*/}
-              <div className="clear" />
-            </div>
-          </section>
-          <AboutSnapbox />
+          <Features />
+          {/* <AboutSnapbox /> */}
 
           <section id="why-choose-us">
             <div className="container">
@@ -202,80 +163,8 @@ const Home = () => {
             </div>
             {/*container*/}
           </section>
-          <section id="expand">
-            <div className="text-center">
-              <h5 className="common-h5">EXPERINCE</h5>
-              <h2 className="common-h2">Pay for Best Services</h2>
-            </div>
-            {/*text-center*/}
-            <div className="expand-img-col">
-              <div className="expand-img">
-                <img src={homeImg} alt="expand" className="img-responsive" />
-                <div className="expand-img-info">
-                  <i className="fa fa-mobile-phone" />
-                  <a href="#">
-                    Get In Touch <i className="fa fa-long-arrow-right" />
-                  </a>
-                </div>
-              </div>
-            </div>
-            {/*expand-img-col*/}
-            <div className="expand-img-info-col">
-              <div className="progress-bar-col">
-                <div className="col-sm-4">
-                  <div className="progressbar">
-                    <div className="second circle" data-percent={100}>
-                      <strong />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="progressbar">
-                    <div className="second circle" data-percent={100}>
-                      <strong />
-                    </div>
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="progressbar">
-                    <div className="second circle" data-percent={100}>
-                      <strong />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/*progress-bar-col*/}
-              <div className="progress-info-col">
-                <div className="progress-info">
-                  <h3>Website development</h3>
-                  <p>
-                    Create an impactful online presence with our Website
-                    Development services.{" "}
-                  </p>
-                </div>
-                {/*progress-info*/}
-                <div className="progress-info">
-                  <h3>SEO Management</h3>
-                  <p>
-                    Enhance your online visibility with our SEO Management.{" "}
-                  </p>
-                </div>
-                {/*progress-info*/}
-                <div className="progress-info">
-                  <h3>Social Media Advertisement</h3>
-                  <p>
-                    Amplify your reach through our Social Media Advertisement
-                    services.
-                  </p>
-                </div>
-                {/*progress-info*/}
-              </div>
-              {/*progress-info-col*/}
-            </div>
-            {/*expand-img-info-col*/}
-            <div className="clear" />
-            {/*clear*/}
-          </section>
+
+          <Experience />
 
           <section id="faq-par">
             <div className="container">

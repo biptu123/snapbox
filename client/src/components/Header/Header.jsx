@@ -23,7 +23,7 @@ const Hamburger = styled.div`
   position: fixed;
   right: 10px;
   z-index: 1000;
-  top: 20px;
+  top: 10px;
   display: none;
   @media (max-width: 1090px) {
     display: block;
@@ -51,7 +51,18 @@ const MobileMenuItem = styled(NavLink)`
   margin: 10px 0;
   text-decoration: none;
 `;
+const LogoWrapper = styled.div`
+  float: left;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 
+  @media (max-width: 1090px) {
+    height: 65px;
+  }
+`;
 const Logo = styled.img`
   height: 100%;
 `;
@@ -92,19 +103,9 @@ const Header = () => {
         <div className="container">
           <div className="top-bar d-flex justify-content-between align-items-center">
             <div className="nav-col">
-              <div
-                style={{
-                  float: "left",
-                  height: "100px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-                onClick={() => navigate("/")}
-              >
+              <LogoWrapper onClick={() => navigate("/")}>
                 <Logo src={logo} className="" alt="logo" />
-              </div>
+              </LogoWrapper>
 
               <Menu className="menu">
                 <NavLink to="/">Home</NavLink>
@@ -127,15 +128,11 @@ const Header = () => {
         </div>
       </header>
       <Hamburger>
-        <button
-          className="btn btn-outline-secondary"
-          type="button"
-          onClick={toggle}
-        >
+        <button className="btn" type="button" onClick={toggle}>
           {!isOpen ? (
-            <FaBarsStaggered size={40} color="black" />
+            <FaBarsStaggered size={35} color="black" />
           ) : (
-            <MdCancel size={40} color="black" />
+            <MdCancel size={35} color="black" />
           )}
         </button>
       </Hamburger>
