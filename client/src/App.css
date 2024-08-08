@@ -1006,11 +1006,10 @@ hr.footer-hr {
   }
 
   .feature-col {
-    padding: 30px;
+    padding: 10px;
     width: 45%;
     float: left;
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-left: 3%;
     box-shadow: 2px 2px 10px #fefefe;
     border-radius: 13px;
     transition: all 0.5s ease;
@@ -1233,10 +1232,13 @@ hr.footer-hr {
     margin: 30px 0px 0px;
   }
 }
-/*! jQuery UI - v1.12.1 - 2020-03-17
-* http://jqueryui.com
-* Copyright jQuery Foundation and other contributors; Licensed MIT */
 
+@media screen and (max-width: 1135px) {
+  .feature-col {
+    height: 300px;
+    padding: 10px;
+  }
+}
 .ui-helper-hidden {
   display: none;
 }
